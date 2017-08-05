@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this._httpService.get('/api/values').subscribe(values => {
-            this.apiValues = values.json() as string[];
+            this.apiValues = values.json().join().replace(',', ' ') as string[];
         });
     }
 }
