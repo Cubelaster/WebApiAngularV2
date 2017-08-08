@@ -16,12 +16,12 @@ namespace WebApiAngularV2
           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
           .AddEnvironmentVariables();
 
-      this.logger = _logger;
+      this._logger = _logger;
       Configuration = builder.Build();
     }
 
     public IConfigurationRoot Configuration { get; }
-    private ILogger<Startup> logger { get; set; }
+    private ILogger<Startup> _logger { get; set; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -64,7 +64,7 @@ namespace WebApiAngularV2
             //&& !context.Request.Path.Value.StartsWith("/api/")
            )
         {
-          logger.LogInformation("Redirected from 404 to index");
+          _logger.LogInformation("Redirected from 404 to index");
           context.Request.Path = "/index.html";
           await next();
         }
