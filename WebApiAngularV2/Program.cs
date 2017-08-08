@@ -12,9 +12,10 @@ namespace WebApiAngularV2
       Console.WriteLine("Running API with Kestrel!");
 
       var host = new WebHostBuilder()
-          .UseKestrel()
           .UseContentRoot(Directory.GetCurrentDirectory())
           .UseStartup<Startup>()
+          .UseIISIntegration()
+          .UseKestrel()
           .Build();
 
       host.Run();
