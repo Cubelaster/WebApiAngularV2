@@ -15,3 +15,5 @@ Visual Studio (I used 2017) and npm
    This will install all the dependencies required for the solution to build
 4. From same command line, run ng build
    This builds the solution to wwwroot folder and angular app is now ready to serve
+5. For complete WEB Api projekt, run it from Visual Studio (refresh the cache in broser!)
+6. Angular can be run solo, from the WebApiAngularV2 folder run ng serve
