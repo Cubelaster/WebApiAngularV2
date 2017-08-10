@@ -17,3 +17,9 @@ Visual Studio (I used 2017) and npm
    This builds the solution to wwwroot folder and angular app is now ready to serve
 5. For complete WEB Api projekt, run it from Visual Studio (refresh the cache in broser!)
 6. Angular can be run solo, from the WebApiAngularV2 folder run ng serve
+
+
+On to some specific cases from solution. 
+Since I did Typescript last time, they switched from namespaces to modules. Each .ts file is it's own module. 
+So now I'm bundling modules in another file before importing them where I need them. Need to find a better solution still. 
+https://stackoverflow.com/questions/21706455/how-do-i-split-my-module-across-multiple-files-in-typescript-with-node-js
