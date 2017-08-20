@@ -4,19 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { MainMenuComponent } from './main-menu/main-menu.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { MainMenuComponent } from '../app/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ProductListComponent,
-    MainMenuComponent
+      AppComponent,
+      MainMenuComponent
   ],
   imports: [
       BrowserModule,
       HttpModule,
-      FormsModule
+      FormsModule,
+      AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
