@@ -4,6 +4,7 @@ export class Products implements IProducts {
     Id?: number;
     Name: string;
     SKU: number;
+    Quantity?: number;
 
     constructor(Id: number, Name: string, SKU: number) {
       this.Id = Id,
