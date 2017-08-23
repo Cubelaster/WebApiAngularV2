@@ -23,3 +23,7 @@ On to some specific cases from solution.
 Since I did Typescript last time, they switched from namespaces to modules. Each .ts file is it's own module. 
 So now I'm bundling modules in another file before importing them where I need them. Need to find a better solution still. 
 https://stackoverflow.com/questions/21706455/how-do-i-split-my-module-across-multiple-files-in-typescript-with-node-js
+
+https://benetis.me/post/creating-shopping-cart-with-product-list-in-angular2/
+https://www.sitepoint.com/understanding-component-architecture-angular/
+https://www.npmjs.com/package/angular-cli#usage
