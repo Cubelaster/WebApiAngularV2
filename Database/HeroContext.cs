@@ -13,5 +13,6 @@ namespace Database
         }
 
         public DbSet<Hero> Hero { get; set; }
+        public DbSet<Product> Product { get; set; }
     }
 }
