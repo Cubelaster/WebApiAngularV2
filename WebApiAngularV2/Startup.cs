@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Database;
 
 namespace WebApiAngularV2
 {
@@ -28,6 +30,8 @@ namespace WebApiAngularV2
     {
       // Add framework services.
       services.AddMvc();
+
+      services.AddDbContext<HeroContext>(options => options.UseSqlServer("HeroConnection"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
