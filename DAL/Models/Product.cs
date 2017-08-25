@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DAL.Contracts.Abstracts;
 
 namespace DAL.Models
 {
-    public class Product
+    public class Product : DatabaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
     }
