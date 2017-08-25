@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using Database;
+using DAL;
 
 namespace WebApiAngularV2.Controllers
 {

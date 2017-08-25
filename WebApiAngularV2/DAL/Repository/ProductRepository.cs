@@ -1,5 +1,5 @@
-﻿using Database;
-using Database.Models;
+﻿using DAL;
+using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
 using WebApiAngularV2.Repository.Contracts;

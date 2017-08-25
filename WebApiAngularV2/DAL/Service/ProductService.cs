@@ -1,4 +1,4 @@
-﻿using Database.Models;
+﻿using DAL.Models;
 using System.Collections.Generic;
 using WebApiAngularV2.Repository;
 using WebApiAngularV2.Repository.Contracts;
