@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using WebApiAngularV2.Service;
-using WebApiAngularV2.Repository.Contracts;
-using WebApiAngularV2.Repository;
-using WebApiAngularV2.Service.Contracts;
 using DAL;
+using DAL.Repository;
+using DAL.Services.ServicesContracts;
+using DAL.Services;
+using DAL.Repository.RepositoryContracts;
 
 namespace WebApiAngularV2
 {
@@ -35,8 +35,10 @@ namespace WebApiAngularV2
       // Add framework services.
       services.AddMvc();
 
-      services.AddDbContext<HeroContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
-      services.AddSingleton<IProductRepository, ProductRepository>();
+      services.AddDbContext<HeroContext>(options => 
+        options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddSingleton<IProductService, ProductService>();
     }
 

@@ -1,5 +1,6 @@
 ﻿using DAL.Contracts.Abstracts;
 using DAL.Contracts.Enumerations;
+using DAL.Repository.RepositoryContracts;
 using HelperModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,10 +10,10 @@ using System.Linq.Expressions;
 
 namespace DAL.Repository
 {
-    public class GenericRepository<TEntity> where TEntity : DatabaseEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : DatabaseEntity
     {
-        internal HeroContext _context;
-        internal DbSet<TEntity> dbSet;
+        private HeroContext _context;
+        private DbSet<TEntity> dbSet;
 
         public GenericRepository(HeroContext context)
         {
@@ -53,7 +54,7 @@ namespace DAL.Repository
             }
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetById(int id)
         {
             return dbSet.Find(id);
         }
@@ -63,7 +64,7 @@ namespace DAL.Repository
             dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(int id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             SoftDelete(entityToDelete);
@@ -76,7 +77,7 @@ namespace DAL.Repository
             _context.Entry(entityToDelete).State = EntityState.Modified;
         }
 
-        public virtual void HardDelete(object id)
+        public virtual void HardDelete(int id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             DeleteForever(entityToDelete);
@@ -96,6 +97,5 @@ namespace DAL.Repository
             dbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
-
     }
 }
