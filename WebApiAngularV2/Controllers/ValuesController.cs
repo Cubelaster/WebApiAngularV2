@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using DAL.Services.ServicesContracts;
+using DAL.Models;
 
 namespace WebApiAngularV2.Controllers
 {
   [Route("api/[controller]")]
   public class ValuesController : Controller
   {
-    public ValuesController() { }
+    IProductService _service;
+    public ValuesController(IProductService service)
+    {
+      _service = service;
+    }
 
     // GET api/values
     [HttpGet]
-    public IEnumerable<string> Get()
+    public List<Product> Get()
     {
-      return new string[] { "Hello", "World!" };
+      return _service.GetAll();
     }
   }
 }

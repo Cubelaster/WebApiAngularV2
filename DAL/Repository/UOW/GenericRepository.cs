@@ -1,6 +1,6 @@
 ﻿using DAL.Contracts.Abstracts;
 using DAL.Contracts.Enumerations;
-using DAL.Repository.RepositoryContracts;
+using DAL.Repository.RepositoryContracts.UOW;
 using HelperModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DAL.Repository
+namespace DAL.Repository.UOW
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : DatabaseEntity
     {
-        private HeroContext _context;
+        private readonly HeroContext _context;
         private DbSet<TEntity> dbSet;
 
         public GenericRepository(HeroContext context)

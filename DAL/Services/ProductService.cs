@@ -1,21 +1,20 @@
 ﻿using DAL.Services.ServicesContracts;
 using System.Collections.Generic;
 using DAL.Models;
-using DAL.Repository;
 using System.Linq;
-using DAL.Repository.RepositoryContracts;
+using DAL.Repository.RepositoryContracts.UOW;
 
 namespace DAL.Services
 {
     public class ProductService : IProductService
     {
         private IUnitOfWork _uow;
-        private GenericRepository<Product> _repo;
+        private IGenericRepository<Product> _repo;
 
         public ProductService(IUnitOfWork uow)
         {
             _uow = uow;
-            _repo = _uow.GetRepository<Product>();
+            _repo = _uow.ProductRepository;
         }
 
         public List<Product> GetAll()
