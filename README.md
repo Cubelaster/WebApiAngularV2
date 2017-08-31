@@ -27,3 +27,11 @@ https://stackoverflow.com/questions/21706455/how-do-i-split-my-module-across-mul
 https://benetis.me/post/creating-shopping-cart-with-product-list-in-angular2/
 https://www.sitepoint.com/understanding-component-architecture-angular/
 https://www.npmjs.com/package/angular-cli#usage
+
+Managed to get SingletonContext used through UnitOfWork. 
+
+The key points are:
+   Register context as singleton in startup
+   Create GenericRepository class receiving context through injection
+   Create UnitOfWork class also receiving context through injection
+   Services have to be able to have UnitOfWork injected as well
