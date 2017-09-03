@@ -1,6 +1,6 @@
 ﻿<div *ngFor="let product of storeProducts">
   <p>
-    <span>{{ product.Name}}</span>
+    <span><a [routerLink]="['/product', product.Id]">Component One</a> {{ product.Name}}</span>
     <span>[SKU: {{ product.SKU}}]</span>
     <span>{{product.Price}} HRK </span>
   </p>

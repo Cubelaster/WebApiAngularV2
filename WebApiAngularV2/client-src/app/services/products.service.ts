@@ -10,6 +10,11 @@ export class ProductsService {
     getProducts(): Products[] {
         return productsList;
     }
+
+    getProduct(Id: number) {
+        return productsList.find(item => item.Id == Id);
+    }
+
     getSelectedProducts(): Products[] {
         return this.selectedProducts;
     }
