@@ -4,7 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Database;
+using DAL;
+using DAL.Services.ServicesContracts;
+using DAL.Services;
+using DAL.Repository.RepositoryContracts.UOW;
+using DAL.Repository.UOW;
 
 namespace WebApiAngularV2
 {
@@ -31,7 +35,11 @@ namespace WebApiAngularV2
       // Add framework services.
       services.AddMvc();
 
-      services.AddDbContext<HeroContext>(options => options.UseSqlServer("HeroConnection"));
+      services.AddDbContext<HeroContext>(options => 
+        options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
+      services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped<IProductService, ProductService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
