@@ -2,4 +2,5 @@
     Id?: number;
     Name: string;
     SKU: number;
+    Price: number;
 }
