@@ -1,5 +1,22 @@
-﻿<li *ngFor="let p of productList">
-  {{p.Name}}
-  <button (click)="Cart.addProduct(p)">Add to cart</button>
-</li>
+﻿<div *ngFor="let product of storeProducts">
+  <p>
+    <span>{{ product.Name}}</span>
+    <span>[SKU: {{ product.SKU}}]</span>
+    <span>{{product.Price}} HRK </span>
+  </p>
+  <div>
+    <input type="number" #quantityField min="1" step="1" max="99">
+    <button type="button" (click)="addProductToCart(product, quantityField.value)"> Add To Cart</button>
+  </div>
+</div>
 
+<div *ngFor="let selected of selectedProducts">
+  <p>Selected</p>
+    <p>
+      <span>{{ selected.Name}}</span>
+      <span>[SKU: {{ selected.SKU}}]</span>
+      <span>{{selected.Price}} HRK </span>
+      <span>Total: {{selected.Quantity}} Quantity </span>
+      <span>Total: {{selected.Price * selected.Quantity}}</span>
+    </p>
+  </div>

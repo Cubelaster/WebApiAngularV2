@@ -11,6 +11,7 @@ import { ProductsService } from '../services/products.service';
 })
 export class ProductListComponent implements OnInit {
     storeProducts: Products[] = [];
+    selectedProducts: Products[] = [];
     constructor(private _httpService: Http,
         private productService: ProductsService
     ) { }
@@ -20,14 +21,19 @@ export class ProductListComponent implements OnInit {
         this.storeProducts = this.productService.getProducts();
     }
 
+    getSelectedProducts() : void {
+        this.selectedProducts = this.productService.getSelectedProducts();
+    }
+
     Cart = new Cart();
 
     ngOnInit() {
         this.getStoreProducts();
     }
 
-    addProductToCart(Id: number): void {
-        this.productService.addProduct(Id);
+    addProductToCart(product: Products, quantityToAdd: number): void {
+        this.productService.addProduct(product, Number(quantityToAdd));
+        this.getSelectedProducts();
     }
 
 }

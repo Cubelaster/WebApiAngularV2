@@ -12,5 +12,6 @@ export class Products implements IProducts {
         this.Name = Name,
         this.SKU = SKU,
         this.Price = Price
+        this.Quantity = 0; 
     }
 }

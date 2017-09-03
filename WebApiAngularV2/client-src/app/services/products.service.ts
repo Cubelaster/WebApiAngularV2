@@ -14,10 +14,15 @@ export class ProductsService {
         return this.selectedProducts;
     }
 
-    addProduct(Id: number): void {
-        let Product = productsList.find(item => item.Id === Id);
+    addProduct(product: Products, quantityToAdd: number): void {
+        debugger;
+        quantityToAdd = (quantityToAdd <= 0 ? 1 : quantityToAdd)
+        let Product = productsList.find(item => item.Id === product.Id);
         if (this.selectedProducts.indexOf(Product) < 0) {
+            Product.Quantity = quantityToAdd;
             this.selectedProducts.push(Product);
+        } else {
+        product.Quantity += quantityToAdd;
         }
     }
 
@@ -32,7 +37,7 @@ export class ProductsService {
 export const productsList: Products[] = [
     new Products(7, "Product 7", 22, 7),
     new Products(1, "Product 1", 11, 1),
-    new Products(7, "Product 7", 22, 2),
-    new Products(7, "Product 7", 22, 3),
-    new Products(7, "Product 7", 22, 4)
+    new Products(2, "Product 2", 22, 2),
+    new Products(3, "Product 3", 22, 3),
+    new Products(4, "Product 4", 22, 4)
 ]; 
