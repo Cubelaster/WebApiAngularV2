@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace HelperModels
+namespace DAL.Models.HelperModels
 {
     public class SortExpression<TEntity> where TEntity : class
     {

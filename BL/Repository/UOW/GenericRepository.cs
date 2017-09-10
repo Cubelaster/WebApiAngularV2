@@ -1,14 +1,15 @@
 ﻿using DAL.Contracts.Abstracts;
 using DAL.Contracts.Enumerations;
-using DAL.Repository.RepositoryContracts.UOW;
-using HelperModels;
+using DAL.Models.HelperModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL;
+using BL.Repository.UOW.Contracts;
 
-namespace DAL.Repository.UOW
+namespace BL.Repository.UOW
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : DatabaseEntity
     {

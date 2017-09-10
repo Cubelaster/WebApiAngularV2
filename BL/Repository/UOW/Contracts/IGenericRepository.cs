@@ -1,11 +1,11 @@
 ﻿using DAL.Contracts.Abstracts;
-using HelperModels;
+using DAL.Models.HelperModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DAL.Repository.RepositoryContracts.UOW
+namespace BL.Repository.UOW.Contracts
 {
     public interface IGenericRepository<TEntity> where TEntity : DatabaseEntity
     {

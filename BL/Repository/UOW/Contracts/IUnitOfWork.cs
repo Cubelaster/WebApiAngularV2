@@ -2,7 +2,7 @@
 using DAL.Models;
 using System;
 
-namespace DAL.Repository.RepositoryContracts.UOW
+namespace BL.Repository.UOW.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {

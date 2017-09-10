@@ -1,10 +1,10 @@
-﻿using DAL.Services.ServicesContracts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DAL.Models;
 using System.Linq;
-using DAL.Repository.RepositoryContracts.UOW;
+using BL.Services.ServicesContracts;
+using BL.Repository.UOW.Contracts;
 
-namespace DAL.Services
+namespace BL.Services
 {
     public class ProductService : IProductService
     {

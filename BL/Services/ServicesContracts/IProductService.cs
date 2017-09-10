@@ -1,7 +1,7 @@
 ﻿using DAL.Models;
 using System.Collections.Generic;
 
-namespace DAL.Services.ServicesContracts
+namespace BL.Services.ServicesContracts
 {
     public interface IProductService
     {

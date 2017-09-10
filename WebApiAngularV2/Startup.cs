@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using DAL;
-using DAL.Services.ServicesContracts;
-using DAL.Services;
-using DAL.Repository.RepositoryContracts.UOW;
-using DAL.Repository.UOW;
+using BL.Repository.UOW.Contracts;
+using BL.Repository.UOW;
+using BL.Services;
+using BL.Services.ServicesContracts;
 
 namespace WebApiAngularV2
 {

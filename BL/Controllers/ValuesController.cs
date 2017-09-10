@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using DAL.Services.ServicesContracts;
 using DAL.Models;
+using BL.Services.ServicesContracts;
 
-namespace WebApiAngularV2.Controllers
+namespace BL.Controllers
 {
-  [Route("api/[controller]")]
+    [Route("api/[controller]")]
   public class ValuesController : Controller
   {
     IProductService _service;

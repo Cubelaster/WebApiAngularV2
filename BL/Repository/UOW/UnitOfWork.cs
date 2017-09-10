@@ -1,8 +1,9 @@
-﻿using DAL.Repository.RepositoryContracts.UOW;
-using System;
+﻿using System;
 using DAL.Models;
+using BL.Repository.UOW.Contracts;
+using DAL;
 
-namespace DAL.Repository.UOW
+namespace BL.Repository.UOW
 {
     public partial class UnitOfWork : IUnitOfWork
     {
