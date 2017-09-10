@@ -20,7 +20,6 @@ export class ProductsService {
     }
 
     addProduct(product: Products, quantityToAdd: number): void {
-        debugger;
         quantityToAdd = (quantityToAdd <= 0 ? 1 : quantityToAdd)
         let Product = productsList.find(item => item.Id === product.Id);
         if (this.selectedProducts.indexOf(Product) < 0) {
