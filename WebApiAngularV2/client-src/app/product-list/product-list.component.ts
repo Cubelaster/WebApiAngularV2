@@ -2,6 +2,7 @@
 import { Http } from '@angular/http';
 import { Products } from '../Models/ViewModelExports';
 import { Cart } from '../Models/ViewModelExports';
+import { ProductsService } from '../services/products.service';
 
 @Component({
     selector: 'app-product-list',
@@ -9,18 +10,30 @@ import { Cart } from '../Models/ViewModelExports';
     styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-    constructor(private _httpService: Http) { }
+    storeProducts: Products[] = [];
+    selectedProducts: Products[] = [];
+    constructor(private _httpService: Http,
+        private productService: ProductsService
+    ) { }
 
-    productList: Products[] = [
-        new Products(1, "Prvi", 1),
-        new Products(2, "Drugi", 2),
-        new Products(3, "Treci", 3),
-        new Products(4, "Četvrti", 4)
-    ];
+    getStoreProducts(): void
+    {
+        this.storeProducts = this.productService.getProducts();
+    }
+
+    getSelectedProducts() : void {
+        this.selectedProducts = this.productService.getSelectedProducts();
+    }
 
     Cart = new Cart();
 
     ngOnInit() {
+        this.getStoreProducts();
+    }
+
+    addProductToCart(product: Products, quantityToAdd: number): void {
+        this.productService.addProduct(product, Number(quantityToAdd));
+        this.getSelectedProducts();
     }
 
 }
