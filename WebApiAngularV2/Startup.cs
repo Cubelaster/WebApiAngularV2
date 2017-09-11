@@ -9,6 +9,8 @@ using BL.Repository.UOW.Contracts;
 using BL.Repository.UOW;
 using BL.Services;
 using BL.Services.ServicesContracts;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DAL.Models.IdentityClasses;
 
 namespace WebApiAngularV2
 {
@@ -37,6 +39,18 @@ namespace WebApiAngularV2
 
       services.AddDbContext<HeroContext>(options => 
         options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
+
+      services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+      {
+        options.Password.RequireDigit = true;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+      })
+        .AddEntityFrameworkStores<HeroContext>()
+        .AddDefaultTokenProviders();
+
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IProductService, ProductService>();
