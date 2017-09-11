@@ -35,3 +35,8 @@ The key points are:
    Create GenericRepository class receiving context through injection
    Create UnitOfWork class also receiving context through injection
    Services have to be able to have UnitOfWork injected as well
+   
+Adding Identity to project:
+   http://www.blinkingcaret.com/2016/11/30/asp-net-identity-core-from-scratch/
+   Basically, just add the NuGet packages and extend the DbContext and ApplicationUser
+   After that, just register the service
