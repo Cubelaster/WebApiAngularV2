@@ -8,13 +8,15 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { MainMenuComponent } from '../app/main-menu/main-menu.component';
 import { ProductsService } from '../app/Services/products.service';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
+import { AlertComponent } from './Components/client-src/app/Components/alert/alert.component';
 
 
 @NgModule({
   declarations: [
       AppComponent,
       MainMenuComponent,
-      ProductDetailComponent
+      ProductDetailComponent,
+      AlertComponent
   ],
   imports: [
       BrowserModule,
