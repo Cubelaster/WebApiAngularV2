@@ -13,11 +13,17 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DAL.Models.IdentityClasses;
 using System;
 using AutoMapper;
+using DAL.Models.Security;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebApiAngularV2
 {
   public class Startup
   {
+    private const string SecretKey = "CubelasterKey"; // todo: get this from somewhere secure
+    private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+
     public Startup(IHostingEnvironment env, ILogger<Startup> _logger)
     {
       var builder = new ConfigurationBuilder()
@@ -41,6 +47,18 @@ namespace WebApiAngularV2
 
       services.AddDbContext<HeroContext>(options => 
         options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
+
+      // jwt wire up
+      // Get options from app settings
+      var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+      // Configure JwtIssuerOptions
+      services.Configure<JwtIssuerOptions>(options =>
+      {
+        options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+        options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+        options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+      });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(options =>
       {
@@ -104,6 +122,30 @@ namespace WebApiAngularV2
           context.Request.Path = "/index.html";
           await next();
         }
+      });
+
+      var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+      var tokenValidationParameters = new TokenValidationParameters
+      {
+        ValidateIssuer = true,
+        ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+        ValidateAudience = true,
+        ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = _signingKey,
+
+        RequireExpirationTime = false,
+        ValidateLifetime = false,
+        ClockSkew = TimeSpan.Zero
+      };
+
+      app.UseJwtBearerAuthentication(new JwtBearerOptions
+      {
+        AutomaticAuthenticate = true,
+        AutomaticChallenge = true,
+        TokenValidationParameters = tokenValidationParameters
       });
 
       app.UseStaticFiles();
