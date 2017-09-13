@@ -2,8 +2,8 @@
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { ProductListComponent } from '../product-list/product-list.component';
-import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { ProductListComponent } from '../Components/product-list/product-list.component';
+import { ProductDetailComponent } from '../Components/product-detail/product-detail.component';
 
 const routes: Routes = [
     {
