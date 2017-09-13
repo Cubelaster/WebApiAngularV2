@@ -9,9 +9,10 @@ using DAL.Contracts.Enumerations;
 namespace DAL.Migrations
 {
     [DbContext(typeof(HeroContext))]
-    partial class HeroContextModelSnapshot : ModelSnapshot
+    [Migration("20170913170340_Extended_ApplicationUser_WithDeletedFlag")]
+    partial class Extended_ApplicationUser_WithDeletedFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DAL.Contracts.Enumerations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 
 namespace DAL.Models.IdentityClasses
@@ -8,5 +9,6 @@ namespace DAL.Models.IdentityClasses
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateRegistered { get; set; }
+        public DatabaseEntityStatusEnum Status { get; set; }
     }
 }

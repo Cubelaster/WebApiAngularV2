@@ -2,7 +2,7 @@
 {
     public enum DatabaseEntityStatusEnum : int
     {
-        Deleted,
-        Active
+        Active = 1,
+        Deleted = 0
     }
 }

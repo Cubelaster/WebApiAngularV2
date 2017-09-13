@@ -11,6 +11,8 @@ using BL.Services;
 using BL.Services.ServicesContracts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DAL.Models.IdentityClasses;
+using System;
+using AutoMapper;
 
 namespace WebApiAngularV2
 {
@@ -47,9 +49,17 @@ namespace WebApiAngularV2
         options.Password.RequireLowercase = true;
         options.Password.RequireNonAlphanumeric = true;
         options.Password.RequireUppercase = true;
+        options.User.RequireUniqueEmail = true;
+
+        // Lockout settings
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.AllowedForNewUsers = true;
       })
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();
+
+      services.AddAutoMapper();
 
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -103,6 +113,8 @@ namespace WebApiAngularV2
       // Configures application for usage as API
       // with default route of 'api/[Controller]'
       app.UseMvcWithDefaultRoute();
+
+      app.UseIdentity();
     }
   }
 }
