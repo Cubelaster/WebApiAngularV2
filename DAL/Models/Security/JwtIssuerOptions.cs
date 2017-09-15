@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DAL.Models.Security
 {
+    // JWT
     public class JwtIssuerOptions
     {
         /// <summary>

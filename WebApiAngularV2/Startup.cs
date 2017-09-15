@@ -16,12 +16,15 @@ using AutoMapper;
 using DAL.Models.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DAL.Models.HelperModels;
+using BL.Security.SecurityContracts;
+using BL.Security;
 
 namespace WebApiAngularV2
 {
   public class Startup
   {
-    private const string SecretKey = "CubelasterKey"; // todo: get this from somewhere secure
+    private const string SecretKey = "CubelasterKeyForWebApi"; // todo: get this from somewhere secure
     private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
     public Startup(IHostingEnvironment env, ILogger<Startup> _logger)
@@ -48,7 +51,7 @@ namespace WebApiAngularV2
       services.AddDbContext<HeroContext>(options => 
         options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
 
-      // jwt wire up
+      // JWT wire up
       // Get options from app settings
       var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -58,6 +61,12 @@ namespace WebApiAngularV2
         options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
         options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
         options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+      });
+
+      // api user claim policy
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtHelpers.Strings.JwtClaimIdentifiers.Rol, JwtHelpers.Strings.JwtClaims.ApiAccess));
       });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -82,6 +91,7 @@ namespace WebApiAngularV2
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IProductService, ProductService>();
+      services.AddTransient<IJwtFactory, JwtFactory>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,6 +134,8 @@ namespace WebApiAngularV2
         }
       });
 
+
+      // JWT
       var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
       var tokenValidationParameters = new TokenValidationParameters
       {
