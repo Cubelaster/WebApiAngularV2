@@ -1,33 +1,38 @@
-﻿
-import { BrowserModule } from '@angular/platform-browser';
+﻿import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, XHRBackend } from '@angular/http';
+import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
+
+import { routing } from './app-routing/app.routing';
+
+import { AccountModule } from './modules/account/account.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing/app-routing.module';
-import { MainMenuComponent } from '../app/main-menu/main-menu.component';
-import { ProductsService } from '../app/Services/products.service';
-import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
-import { AlertComponent } from './Components/alert/alert.component';
+import { HomeComponent } from './Components/home/home.component';
+import { HeaderComponent } from './Components/header/header.component';
 
+import { ConfigService } from '../app/Utils/config.service';
 
 @NgModule({
-  declarations: [
-      AppComponent,
-      MainMenuComponent,
-      ProductDetailComponent,
-      AlertComponent
-  ],
-  imports: [
-      BrowserModule,
-      HttpModule,
-      FormsModule,
-      AppRoutingModule
-  ],
-  providers: [
-      ProductsService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        HomeComponent
+    ],
+    imports: [
+        AccountModule,
+        DashboardModule,
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        routing
+    ],
+    providers: [ConfigService, {
+        provide: XHRBackend,
+        useClass: AuthenticateXHRBackend
+    }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

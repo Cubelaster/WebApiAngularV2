@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="client-src\app\Directives\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
