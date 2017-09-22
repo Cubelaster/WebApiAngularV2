@@ -6,12 +6,12 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 
 import { routing } from './app-routing/app.routing';
 
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './Components/header/header.component';
+import { HomeComponent } from './Components/home/home.component';
+
 import { AccountModule } from './modules/account/account.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './Components/home/home.component';
-import { HeaderComponent } from './Components/header/header.component';
 
 import { ConfigService } from '../app/Utils/config.service';
 

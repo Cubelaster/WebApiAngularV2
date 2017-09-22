@@ -19,12 +19,13 @@ using System.Text;
 using DAL.Models.HelperModels;
 using BL.Security.SecurityContracts;
 using BL.Security;
+using FluentValidation.AspNetCore;
 
 namespace WebApiAngularV2
 {
   public class Startup
   {
-    private const string SecretKey = "CubelasterKeyForWebApi"; // todo: get this from somewhere secure
+    private const string SecretKey = "UGFsYWNHb3JlWmFNZXRhbGFjDQo="; // todo: get this from somewhere secure; PalacGoreZaMetalac
     private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
     public Startup(IHostingEnvironment env, ILogger<Startup> _logger)
@@ -45,11 +46,13 @@ namespace WebApiAngularV2
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      // Add framework services.
-      services.AddMvc();
-
       services.AddDbContext<HeroContext>(options => 
-        options.UseSqlServer(Configuration.GetConnectionString("HeroConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("HeroConnection"), opts => opts.MigrationsAssembly("DAL")));
+
+      services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped<IProductService, ProductService>();
+      services.AddSingleton<IJwtFactory, JwtFactory>();
 
       // JWT wire up
       // Get options from app settings
@@ -86,12 +89,8 @@ namespace WebApiAngularV2
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();
 
+      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
       services.AddAutoMapper();
-
-      services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-      services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IProductService, ProductService>();
-      services.AddTransient<IJwtFactory, JwtFactory>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -163,12 +162,11 @@ namespace WebApiAngularV2
       app.UseStaticFiles();
       app.UseDefaultFiles();
 
-      app.UseMvc();
+      //app.UseIdentity();
+
       // Configures application for usage as API
       // with default route of 'api/[Controller]'
       app.UseMvcWithDefaultRoute();
-
-      app.UseIdentity();
     }
   }
 }
