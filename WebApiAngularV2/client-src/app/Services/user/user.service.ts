@@ -6,8 +6,7 @@ import { ConfigService } from '../../Utils/config.service';
 
 import { BaseService } from "../services";
 
-import { Observable } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
 //import * as _ from 'lodash';
 
@@ -15,7 +14,6 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import '../../rxjs-operators.js';
 
 @Injectable()
-
 export class UserService extends BaseService {
 
     baseUrl: string = '';
@@ -36,12 +34,12 @@ export class UserService extends BaseService {
         this.baseUrl = configService.getApiURI();
     }
 
-    register(model: IUserRegistration): Observable<IUserRegistration> {
-        let body = JSON.stringify({ model });
+    register(userName: string, email: string, password: string): Observable<IUserRegistration> {
+        let body = JSON.stringify({ userName, email, password });
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(this.baseUrl + "/accounts", body, options)
+        return this.http.post(this.baseUrl + "/account", body, options)
             .map(res => true)
             .catch(this.handleError);
     }
@@ -72,6 +70,7 @@ export class UserService extends BaseService {
     }
 
     isLoggedIn() {
+        var bla = !!localStorage.getItem('auth_token');
         return this.loggedIn;
     }
 }

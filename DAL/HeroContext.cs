@@ -39,7 +39,7 @@ namespace DAL
             {
                 var optionsBuilder = new DbContextOptionsBuilder<HeroContext>();
                 var connection = configuration.GetConnectionString("HeroConnection");
-                connection = connection == null ? "Server=DESKTOP-M9BFD6K;Database=Hero;User Id=sa;Password=Password11__" : connection;
+                connection = connection == null ? "Server=.;Database=Hero;User Id=sa;Password=Password11__" : connection;
                 optionsBuilder.UseSqlServer(connection, m => { m.EnableRetryOnFailure(); });
 
                 return new HeroContext(optionsBuilder.Options);

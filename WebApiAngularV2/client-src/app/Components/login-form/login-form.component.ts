@@ -42,7 +42,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.userService.login(value.email, value.password)
+            this.userService.login(value.userName, value.password)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {

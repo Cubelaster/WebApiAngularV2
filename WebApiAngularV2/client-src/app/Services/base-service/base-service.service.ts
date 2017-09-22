@@ -1,6 +1,8 @@
-﻿import { Observable } from 'rxjs/Rx';
+﻿import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-export abstract class BaseService {
+@Injectable()
+export class BaseService {
 
     constructor() { }
 
