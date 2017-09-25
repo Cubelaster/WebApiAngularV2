@@ -1,6 +1,5 @@
 ﻿<div class="row">
   <div class="col-md-6">
-
     <div class="card">
 
       <div class="card-header bg-white">
@@ -27,6 +26,11 @@
           </div>
 
           <div class="form-group">
+            <label for="password">Confirm password</label>
+            <input id="passwordConfirmed" type="password" required name="passwordConfirmed" class="form-control" placeholder="Confirm password" ngModel>
+          </div>
+
+          <div class="form-group">
             <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
             <app-spinner [isRunning]="isRequesting"></app-spinner>
           </div>
@@ -37,7 +41,6 @@
 
         </form>
       </div>
-
     </div>
   </div>
 </div>

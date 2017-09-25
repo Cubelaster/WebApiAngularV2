@@ -20,6 +20,7 @@ using DAL.Models.HelperModels;
 using BL.Security.SecurityContracts;
 using BL.Security;
 using FluentValidation.AspNetCore;
+using BL.Controllers;
 
 namespace WebApiAngularV2
 {
@@ -89,7 +90,8 @@ namespace WebApiAngularV2
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();
 
-      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+      services.AddMvc()
+        .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AccountController>());
       services.AddAutoMapper();
     }
 
@@ -162,7 +164,7 @@ namespace WebApiAngularV2
       app.UseStaticFiles();
       app.UseDefaultFiles();
 
-      //app.UseIdentity();
+      app.UseIdentity();
 
       // Configures application for usage as API
       // with default route of 'api/[Controller]'

@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
-    credentials: UserRegistration = { email: '', password: '', userName: '' };
+    credentials: UserRegistration = { email: '', password: '', userName: '', passwordConfirmed: '' };
 
     constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 

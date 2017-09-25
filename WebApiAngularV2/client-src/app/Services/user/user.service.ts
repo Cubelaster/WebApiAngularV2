@@ -34,8 +34,8 @@ export class UserService extends BaseService {
         this.baseUrl = configService.getApiURI();
     }
 
-    register(userName: string, email: string, password: string): Observable<IUserRegistration> {
-        let body = JSON.stringify({ userName, email, password });
+    register(userName: string, email: string, password: string, passwordConfirmed: string): Observable<IUserRegistration> {
+        let body = JSON.stringify({ userName, email, password, passwordConfirmed });
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
