@@ -2,6 +2,7 @@
 import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { Alert, AlertType } from '../../Models/index';
 
 @Injectable()
 export class AlertService {
@@ -17,20 +18,40 @@ export class AlertService {
                     this.keepAfterNavigationChange = false;
                 } else {
                     // clear alert
-                    this.subject.next();
+                    this.clear();
                 }
             }
         });
     }
 
-    success(message: string, keepAfterNavigationChange = false) {
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
+    clear() {
+        // clear alerts
+        this.subject.next();
     }
 
-    error(message: string, keepAfterNavigationChange = false) {
+    getAlert(): Observable<any> {
+        return this.subject.asObservable();
+    }
+
+    success(message: string, keepAfterRouteChange = false) {
+        this.alert(AlertType.Success, message, keepAfterRouteChange);
+    }
+
+    error(message: string, keepAfterRouteChange = false) {
+        this.alert(AlertType.Error, message, keepAfterRouteChange);
+    }
+
+    info(message: string, keepAfterRouteChange = false) {
+        this.alert(AlertType.Info, message, keepAfterRouteChange);
+    }
+
+    warn(message: string, keepAfterRouteChange = false) {
+        this.alert(AlertType.Warning, message, keepAfterRouteChange);
+    }
+
+    alert(type: AlertType, message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'error', text: message });
+        this.subject.next(<Alert>{ type: type, message: message });
     }
 
     getMessage(): Observable<any> {

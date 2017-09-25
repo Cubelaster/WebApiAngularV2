@@ -9,15 +9,18 @@ import { routing } from './app-routing/app.routing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { HomeComponent } from './Components/home/home.component';
+import { AlertComponent } from './Components/alert/alert.component';
 
 import { AccountModule } from './modules/account/account.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 import { ConfigService } from '../app/Utils/config.service';
+import { AlertService } from '../app/Services/services';
 
 @NgModule({
     declarations: [
         AppComponent,
+        AlertComponent,
         HeaderComponent,
         HomeComponent
     ],
@@ -32,7 +35,9 @@ import { ConfigService } from '../app/Utils/config.service';
     providers: [ConfigService, {
         provide: XHRBackend,
         useClass: AuthenticateXHRBackend
-    }],
+    },
+        AlertService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

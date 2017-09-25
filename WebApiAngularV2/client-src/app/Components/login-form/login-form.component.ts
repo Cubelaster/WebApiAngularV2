@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { UserRegistration } from '../../Models/ViewModelExports';
 import { UserService } from '../../Services/services';
+import { AlertService } from '../../Services/services';
 
 @Component({
     selector: 'app-login-form',
@@ -20,7 +21,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     submitted: boolean = false;
     credentials: UserRegistration = { email: '', password: '', userName: '', passwordConfirmed: '' };
 
-    constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
+    constructor(private userService: UserService, private alertService: AlertService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
 
@@ -50,7 +51,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                         this.router.navigate(['/dashboard/home']);
                     }
                 },
-                error => this.errors = error);
+                error => this.alertService.error(error, true));
         }
     }
 }
