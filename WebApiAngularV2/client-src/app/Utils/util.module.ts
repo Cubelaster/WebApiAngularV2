@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { myFocus } from '../Directives/focus.directive';
-import { SpinnerComponent } from '../Components/spinner/spinner.component';
+import { SpinnerComponent } from '../Utils/Components/spinner/spinner.component';
 
 
 @NgModule({

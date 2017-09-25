@@ -8,8 +8,7 @@ import { UserService } from '../../Services/services';
 import { EmailValidator } from '../../Directives/email.validator.directive';
 
 import { routing } from './account.routing';
-import { RegistrationFormComponent } from '../../Components/registration-form/registration-form.component';
-import { LoginFormComponent } from '../../Components/login-form/login-form.component';
+import { RegistrationFormComponent, LoginFormComponent } from '../../Components/index';
 
 @NgModule({
     imports: [
