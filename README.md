@@ -45,3 +45,8 @@ Adding Identity to project:
 Follow this after it: 
    https://fullstackmark.com/post/9/get-started-with-angular-2-and-aspnet-core-in-visual-studio-code
    https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core
+   
+Toastr:
+   http://jasonwatmore.com/post/2017/06/25/angular-2-4-alert-toaster-notifications
+   http://www.codershood.info/2017/04/14/showing-notification-using-toaster-angular-2/
+   https://www.npmjs.com/package/ng2-toastr
