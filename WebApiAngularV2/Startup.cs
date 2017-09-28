@@ -21,6 +21,8 @@ using BL.Security.SecurityContracts;
 using BL.Security;
 using FluentValidation.AspNetCore;
 using BL.Controllers;
+using System.Reflection;
+using BL.ViewModels.Mappings.Account;
 
 namespace WebApiAngularV2
 {
@@ -93,6 +95,8 @@ namespace WebApiAngularV2
       services.AddMvc()
         .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AccountController>());
       services.AddAutoMapper();
+      // This is supposed to be needed, but it worsk without it as well, so... Yeah. Just keep in mind.
+      //typeof(AccountViewModelsToEntityMappingProfile).GetTypeInfo().Assembly 
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
