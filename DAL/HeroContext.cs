@@ -22,6 +22,7 @@ namespace DAL
         public class HeroContextFactory : IDbContextFactory<HeroContext>
         {
             private IConfiguration _configuration;
+            private string _connectionString = "HeroConnection";
 
             public HeroContextFactory() { }
 
@@ -41,12 +42,12 @@ namespace DAL
                 .AddEnvironmentVariables();
 
                 _configuration = builder.Build();
-                var connection = _configuration.GetConnectionString("HeroConnection");
+                var connection = _configuration.GetConnectionString(_connectionString);
 
                 if (String.IsNullOrWhiteSpace(connection))
                 {
                     throw new InvalidOperationException(
-                        "Could not find a connection string named 'HeroConnection'.");
+                        $"Could not find a connection string named {_connectionString}.");
                 }
                 else
                 {
