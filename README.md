@@ -38,6 +38,7 @@ The key points are:
    
 Handling DbContext:
    https://www.benday.com/2017/02/17/ef-core-migrations-without-hard-coding-a-connection-string-using-idbcontextfactory/
+   https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell
    
 Handling Config:
    https://stackoverflow.com/questions/34269106/read-connectionstring-outside-startup-from-appsetting-json-in-vnext
