@@ -21,33 +21,54 @@ namespace DAL
         #region Migrations Hack
         public class HeroContextFactory : IDbContextFactory<HeroContext>
         {
-            private IConfigurationRoot configuration;
+            private IConfiguration _configuration;
 
-            public HeroContextFactory()
-            {
-                var builder = new ConfigurationBuilder()
-               .SetBasePath(System.AppContext.BaseDirectory)
-               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                // Here is a bit of a problem:
-                // My DAL project can not fetch the required connection string from Web project
-                // That's why this factory
-                // It gets triggered on Add-Migration
-                configuration = builder.Build();
-            }
+            public HeroContextFactory() { }
 
             public HeroContext Create(DbContextFactoryOptions options)
             {
-                var optionsBuilder = new DbContextOptionsBuilder<HeroContext>();
-                var connection = configuration.GetConnectionString("HeroConnection");
-                connection = connection == null ? "Server=.;Database=Hero;User Id=sa;Password=Password11__" : connection;
-                optionsBuilder.UseSqlServer(connection, m => { m.EnableRetryOnFailure(); });
+                return Create(
+                    options.ContentRootPath,
+                    options.EnvironmentName);
+            }
+
+            private HeroContext Create(string contentRootPath, string environmentName)
+            {
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(contentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{environmentName}.json", true)
+                .AddEnvironmentVariables();
+
+                _configuration = builder.Build();
+                var connection = _configuration.GetConnectionString("HeroConnection");
+
+                if (String.IsNullOrWhiteSpace(connection))
+                {
+                    throw new InvalidOperationException(
+                        "Could not find a connection string named 'HeroConnection'.");
+                }
+                else
+                {
+                    return Create(connection);
+                }
+            }
+
+            private HeroContext Create(string connectionString)
+            {
+                if (string.IsNullOrEmpty(connectionString))
+                    throw new ArgumentException(
+                        $"{nameof(connectionString)} is null or empty.",
+                        nameof(connectionString));
+
+                var optionsBuilder =
+                    new DbContextOptionsBuilder<HeroContext>();
+
+                optionsBuilder.UseSqlServer(connectionString);
 
                 return new HeroContext(optionsBuilder.Options);
             }
         }
         #endregion Migrations Hack
-
-        public DbSet<Hero> Hero { get; set; }
-        public DbSet<Product> Product { get; set; }
     }
 }

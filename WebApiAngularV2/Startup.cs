@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +30,8 @@ namespace WebApiAngularV2
   {
     private const string SecretKey = "UGFsYWNHb3JlWmFNZXRhbGFjDQo="; // todo: get this from somewhere secure; PalacGoreZaMetalac
     private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+    public IConfigurationRoot Configuration { get; }
+    private ILogger<Startup> _logger { get; set; }
 
     public Startup(IHostingEnvironment env, ILogger<Startup> _logger)
     {
@@ -43,8 +45,6 @@ namespace WebApiAngularV2
       Configuration = builder.Build();
     }
 
-    public IConfigurationRoot Configuration { get; }
-    private ILogger<Startup> _logger { get; set; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -52,6 +52,7 @@ namespace WebApiAngularV2
       services.AddDbContext<HeroContext>(options => 
         options.UseSqlServer(Configuration.GetConnectionString("HeroConnection"), opts => opts.MigrationsAssembly("DAL")));
 
+      services.AddSingleton<IConfiguration>(Configuration);
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IProductService, ProductService>();

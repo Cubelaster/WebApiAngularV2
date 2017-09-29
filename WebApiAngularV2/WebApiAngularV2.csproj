@@ -29,7 +29,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
-  <Target Name="AngularBuild" AfterTargets="Build">
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <!--<Target Name="AngularBuild" AfterTargets="Build">
     <Exec Command="npm run build" />
-  </Target>
+  </Target>-->
 </Project>
