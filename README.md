@@ -39,6 +39,9 @@ The key points are:
 Handling DbContext:
    https://www.benday.com/2017/02/17/ef-core-migrations-without-hard-coding-a-connection-string-using-idbcontextfactory/
    
+Handling Config:
+   https://stackoverflow.com/questions/34269106/read-connectionstring-outside-startup-from-appsetting-json-in-vnext
+   
 Adding Identity to project:
 
    http://www.blinkingcaret.com/2016/11/30/asp-net-identity-core-from-scratch/
