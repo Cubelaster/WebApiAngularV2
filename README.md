@@ -36,6 +36,9 @@ The key points are:
    Create UnitOfWork class also receiving context through injection
    Services have to be able to have UnitOfWork injected as well
    
+Handling DbContext:
+   https://www.benday.com/2017/02/17/ef-core-migrations-without-hard-coding-a-connection-string-using-idbcontextfactory/
+   
 Adding Identity to project:
 
    http://www.blinkingcaret.com/2016/11/30/asp-net-identity-core-from-scratch/
