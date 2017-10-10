@@ -1,10 +1,9 @@
-﻿import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UserRegistration } from '../../Models/index';
-import { UserService } from '../../Services/services';
-import { AlertService } from '../../Services/services';
+import { UserService, AlertService } from '../../Services/services';
 
 @Component({
     selector: 'app-login-form',
@@ -16,7 +15,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     brandNew: boolean;
-    errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
     credentials: UserRegistration = { email: '', password: '', userName: '', passwordConfirmed: '' };
@@ -41,7 +39,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     login({ value, valid }: { value: UserRegistration, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
-        this.errors = '';
         if (valid) {
             this.userService.login(value.userName, value.password)
                 .finally(() => this.isRequesting = false)

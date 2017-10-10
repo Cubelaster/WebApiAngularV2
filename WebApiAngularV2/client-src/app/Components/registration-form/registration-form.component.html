@@ -1,4 +1,4 @@
-﻿<div class="row">
+<div class="row">
   <div class="col-md-6">
     <div class="card">
 
@@ -33,10 +33,6 @@
           <div class="form-group">
             <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
             <app-spinner [isRunning]="isRequesting"></app-spinner>
-          </div>
-
-          <div *ngIf="errors" class="alert alert-danger" role="alert">
-            <strong>Oops!</strong> {{errors}}
           </div>
 
         </form>
