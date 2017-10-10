@@ -50,6 +50,10 @@ Adding Identity to project:
    Basically, just add the NuGet packages and extend the DbContext and ApplicationUser
    After that, just register the service
    
+Automapper:
+   https://stackoverflow.com/questions/40275195/how-to-setup-automapper-in-asp-net-core/40275196
+   Only 3 things to do: Get 2 NuGet packages, register AutoMapper profiles, profit
+   
 Follow this after it: 
    https://fullstackmark.com/post/9/get-started-with-angular-2-and-aspnet-core-in-visual-studio-code
    https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core
