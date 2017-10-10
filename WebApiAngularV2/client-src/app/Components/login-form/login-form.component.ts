@@ -1,9 +1,9 @@
-﻿import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { UserRegistration } from '../../Models/ViewModelExports';
-import { UserService } from '../../Services/services';
+import { UserRegistration } from '../../Models/index';
+import { UserService, AlertService } from '../../Services/services';
 
 @Component({
     selector: 'app-login-form',
@@ -15,12 +15,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     brandNew: boolean;
-    errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
     credentials: UserRegistration = { email: '', password: '', userName: '', passwordConfirmed: '' };
 
-    constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
+    constructor(private userService: UserService, private alertService: AlertService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
 
@@ -40,7 +39,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     login({ value, valid }: { value: UserRegistration, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
-        this.errors = '';
         if (valid) {
             this.userService.login(value.userName, value.password)
                 .finally(() => this.isRequesting = false)
@@ -50,7 +48,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                         this.router.navigate(['/dashboard/home']);
                     }
                 },
-                error => this.errors = error);
+                error => this.alertService.error(error, true));
         }
     }
 }

@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { UtilModule } from '../../Utils/util.module';
 
 import { routing } from './dashboard.routing';
-import { RootComponent } from '../../Components/dashboard/root/root.component';
+import { RootComponent } from '../../Components/index';
 import { HomeComponent } from '../../Components/dashboard/home/home.component';
 import { DashboardService } from '../../Services/services';
 
-import { AuthGuard } from '../../auth.guard';
+import { AuthGuard } from '../../Guards/auth.guard';
 
 @NgModule({
     imports: [

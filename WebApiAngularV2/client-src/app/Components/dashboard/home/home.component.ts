@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { HomeDetails } from '../../../Models/ViewModelExports';
+import { HomeDetails } from '../../../Models/index';
 import { DashboardService } from '../../../Services/services';
 
 @Component({

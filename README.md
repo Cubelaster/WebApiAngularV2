@@ -36,6 +36,14 @@ The key points are:
    Create UnitOfWork class also receiving context through injection
    Services have to be able to have UnitOfWork injected as well
    
+Handling DbContext:
+   https://www.benday.com/2017/02/17/ef-core-migrations-without-hard-coding-a-connection-string-using-idbcontextfactory/
+   https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell
+   https://docs.microsoft.com/en-us/ef/efcore-and-ef6/features
+   
+Handling Config:
+   https://stackoverflow.com/questions/34269106/read-connectionstring-outside-startup-from-appsetting-json-in-vnext
+   
 Adding Identity to project:
 
    http://www.blinkingcaret.com/2016/11/30/asp-net-identity-core-from-scratch/
@@ -49,3 +57,8 @@ Automapper:
 Follow this after it: 
    https://fullstackmark.com/post/9/get-started-with-angular-2-and-aspnet-core-in-visual-studio-code
    https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core
+   
+Toastr:
+   http://jasonwatmore.com/post/2017/06/25/angular-2-4-alert-toaster-notifications
+   http://www.codershood.info/2017/04/14/showing-notification-using-toaster-angular-2/
+   https://www.npmjs.com/package/ng2-toastr

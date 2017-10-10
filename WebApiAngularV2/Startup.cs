@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +21,8 @@ using BL.Security.SecurityContracts;
 using BL.Security;
 using FluentValidation.AspNetCore;
 using BL.Controllers;
+using System.Reflection;
+using BL.ViewModels.Mappings.Account;
 
 namespace WebApiAngularV2
 {
@@ -28,6 +30,8 @@ namespace WebApiAngularV2
   {
     private const string SecretKey = "UGFsYWNHb3JlWmFNZXRhbGFjDQo="; // todo: get this from somewhere secure; PalacGoreZaMetalac
     private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+    public IConfigurationRoot Configuration { get; }
+    private ILogger<Startup> _logger { get; set; }
 
     public Startup(IHostingEnvironment env, ILogger<Startup> _logger)
     {
@@ -41,8 +45,6 @@ namespace WebApiAngularV2
       Configuration = builder.Build();
     }
 
-    public IConfigurationRoot Configuration { get; }
-    private ILogger<Startup> _logger { get; set; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -50,6 +52,7 @@ namespace WebApiAngularV2
       services.AddDbContext<HeroContext>(options => 
         options.UseSqlServer(Configuration.GetConnectionString("HeroConnection"), opts => opts.MigrationsAssembly("DAL")));
 
+      services.AddSingleton<IConfiguration>(Configuration);
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IProductService, ProductService>();
@@ -93,6 +96,8 @@ namespace WebApiAngularV2
       services.AddMvc()
         .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AccountController>());
       services.AddAutoMapper();
+      // This is supposed to be needed, but it worsk without it as well, so... Yeah. Just keep in mind.
+      //typeof(AccountViewModelsToEntityMappingProfile).GetTypeInfo().Assembly 
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

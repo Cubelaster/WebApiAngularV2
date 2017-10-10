@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
-import { HomeDetails } from '../../Models/ViewModelExports';
+import { HomeDetails } from '../../Models/index';
 import { ConfigService, BaseService } from '../services';
 
 import { Observable } from 'rxjs/Rx';

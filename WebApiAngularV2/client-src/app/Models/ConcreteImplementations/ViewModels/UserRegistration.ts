@@ -1,4 +1,4 @@
-﻿import { IUserRegistration } from '../../ContractExports';
+﻿import { IUserRegistration } from '../../index';
 
 export class UserRegistration implements IUserRegistration {
     email: string;

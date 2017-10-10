@@ -1,8 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { IUserRegistration } from '../../Models/ContractExports'
-import { UserService } from '../../Services/services';
+import { IUserRegistration } from '../../Models/index'
+import { UserService, AlertService } from '../../Services/services';
 
 @Component({
     selector: 'app-registration-form',
@@ -11,11 +11,10 @@ import { UserService } from '../../Services/services';
 })
 export class RegistrationFormComponent implements OnInit {
 
-    errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
 
-    constructor(private userService: UserService, private router: Router) {
+    constructor(private userService: UserService, private alertService: AlertService, private router: Router) {
 
     }
 
@@ -26,7 +25,6 @@ export class RegistrationFormComponent implements OnInit {
     registerUser({ value, valid }: { value: IUserRegistration, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
-        this.errors = '';
         if (valid) {
             this.userService.register(value.userName, value.email, value.password, value.passwordConfirmed)
                 .finally(() => this.isRequesting = false)
@@ -36,7 +34,7 @@ export class RegistrationFormComponent implements OnInit {
                         this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
                     }
                 },
-                errors => this.errors = errors);
+                error => this.alertService.error(error, true));
         }
     }
 }

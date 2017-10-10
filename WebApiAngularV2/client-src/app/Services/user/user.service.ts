@@ -1,8 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { IUserRegistration } from '../../Models/ContractExports';
-import { ConfigService } from '../../Utils/config.service';
+import { IUserRegistration } from '../../Models/index';
+import { ConfigService } from '../../Utils/Services/config.service';
 
 import { BaseService } from "../services";
 
