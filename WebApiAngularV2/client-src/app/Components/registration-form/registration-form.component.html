@@ -1,41 +1,43 @@
-<div class="row">
-  <div class="col-md-6">
-    <div class="card">
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
 
-      <div class="card-header bg-white">
-        <h4 class="card-title">Create your account</h4>
-      </div>
+        <div class="card-header bg-white">
+          <h4 class="card-title">Create your account</h4>
+        </div>
 
-      <div class="card-block">
-        <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
+        <div class="card-block">
+          <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
 
-          <div class="form-group">
-            <label for="userName">Username</label>
-            <input id="userName" type="text" required name="userName" class="form-control" placeholder="Your username" tmFocus ngModel>
-          </div>
+            <div class="form-group">
+              <label for="userName">Username</label>
+              <input id="userName" type="text" required name="userName" class="form-control" placeholder="Your username" tmFocus ngModel>
+            </div>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email" ngModel #email="ngModel">
-            <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
-          </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email" ngModel #email="ngModel">
+              <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+            </div>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
-          </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
+            </div>
 
-          <div class="form-group">
-            <label for="password">Confirm password</label>
-            <input id="passwordConfirmed" type="password" required name="passwordConfirmed" class="form-control" placeholder="Confirm password" ngModel>
-          </div>
+            <div class="form-group">
+              <label for="password">Confirm password</label>
+              <input id="passwordConfirmed" type="password" required name="passwordConfirmed" class="form-control" placeholder="Confirm password" ngModel>
+            </div>
 
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
-            <app-spinner [isRunning]="isRequesting"></app-spinner>
-          </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
+              <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
 
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
