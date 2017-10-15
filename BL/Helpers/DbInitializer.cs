@@ -49,15 +49,22 @@ namespace BL.Helpers
             }
 
             //Create the default Admin account and apply the Administrator role
-            var defaultUsers = Configuration.GetSection("DefaultUsers").GetChildren();
-            foreach(var user in defaultUsers)
+            if (!_context.Users.Any())
             {
-                var appUser = new ApplicationUser { UserName = user.GetValue<string>("Username"),
-                    Email = user.GetValue<string>("Email"), EmailConfirmed = true,
-                    DateRegistered = DateTime.UtcNow,
-                    Status = DAL.Contracts.Enumerations.DatabaseEntityStatusEnum.Active };
-                await _userManager.CreateAsync(appUser, user.GetValue<string>("Password"));
-                await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(appUser.UserName), "SuperAdmin");
+                var defaultUsers = Configuration.GetSection("DefaultUsers").GetChildren();
+                foreach (var user in defaultUsers)
+                {
+                    var appUser = new ApplicationUser
+                    {
+                        UserName = user.GetValue<string>("Username"),
+                        Email = user.GetValue<string>("Email"),
+                        EmailConfirmed = true,
+                        DateRegistered = DateTime.UtcNow,
+                        Status = DAL.Contracts.Enumerations.DatabaseEntityStatusEnum.Active
+                    };
+                    await _userManager.CreateAsync(appUser, user.GetValue<string>("Password"));
+                    await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(appUser.UserName), "SuperAdmin");
+                }
             }
         }
     }

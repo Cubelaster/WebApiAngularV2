@@ -70,7 +70,7 @@ namespace WebApiAngularV2
       , IDbInitializer dbInitializer)
     {
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-      loggerFactory.AddDebug();
+      loggerFactory.AddDebug(LogLevel.Trace);
 
       app.Use(async (context, next) =>
       {
@@ -131,6 +131,7 @@ namespace WebApiAngularV2
       services.AddAuthorization(options =>
       {
         options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtHelpers.Strings.JwtClaimIdentifiers.Rol, JwtHelpers.Strings.JwtClaims.ApiAccess));
+        options.AddPolicy("SuperAdminRole", policy => policy.RequireRole("SuperAdmin"));
       });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -146,6 +147,7 @@ namespace WebApiAngularV2
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
         options.Lockout.MaxFailedAccessAttempts = 5;
         options.Lockout.AllowedForNewUsers = true;
+        //options.Cookies.ApplicationCookie.AccessDeniedPath = "/login";
       })
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();

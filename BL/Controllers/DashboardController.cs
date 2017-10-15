@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BL.Controllers
 {
-    [Authorize(Policy = "ApiUser")]
+    [Authorize(Roles = "Idiot")]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
