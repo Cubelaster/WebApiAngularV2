@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using BL.Repository.UOW.Contracts;
 using BL.Repository.UOW;
-using BL.Services;
-using BL.Services.ServicesContracts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DAL.Models.IdentityClasses;
 using System;
@@ -23,6 +21,8 @@ using FluentValidation.AspNetCore;
 using BL.Controllers;
 using System.Reflection;
 using BL.ViewModels.Mappings.Account;
+using BL.Helpers.HelperContracts;
+using BL.Helpers;
 
 namespace WebApiAngularV2
 {
@@ -66,7 +66,8 @@ namespace WebApiAngularV2
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory
+      , IDbInitializer dbInitializer)
     {
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
@@ -87,6 +88,8 @@ namespace WebApiAngularV2
 
       ConfigureJWT(app);
 
+      dbInitializer.Initialize(Configuration);
+
       app.UseStaticFiles();
       app.UseDefaultFiles();
 
@@ -94,6 +97,7 @@ namespace WebApiAngularV2
       // Configures application for usage as API
       // with default route of 'api/[Controller]'
       app.UseMvcWithDefaultRoute();
+
     }
 
     #region ConfigureSErvicesSteps
@@ -102,7 +106,7 @@ namespace WebApiAngularV2
       services.AddSingleton<IConfiguration>(Configuration);
       services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IProductService, ProductService>();
+      services.AddScoped<IDbInitializer, DbInitializer>();
       services.AddSingleton<IJwtFactory, JwtFactory>();
     }
 

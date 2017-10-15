@@ -11,21 +11,21 @@ namespace BL.Repository.UOW
         private readonly HeroContext _context;
 
         #region Repositories
-        private IGenericRepository<Product> _productRepository;
+        //private IGenericRepository<Product> _productRepository;
         #endregion Repositories
 
         #region Repositories Getters
-        public IGenericRepository<Product> ProductRepository
-        {
-            get
-            {
-                if (this._productRepository == null)
-                {
-                    this._productRepository = new GenericRepository<Product>(_context);
-                }
-                return _productRepository;
-            }
-        }
+        //public IGenericRepository<Product> ProductRepository
+        //{
+        //    get
+        //    {
+        //        if (this._productRepository == null)
+        //        {
+        //            this._productRepository = new GenericRepository<Product>(_context);
+        //        }
+        //        return _productRepository;
+        //    }
+        //}
         #endregion Repositories Getters
 
         public UnitOfWork(HeroContext context)

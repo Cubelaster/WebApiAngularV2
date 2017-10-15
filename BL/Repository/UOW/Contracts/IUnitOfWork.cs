@@ -10,6 +10,6 @@ namespace BL.Repository.UOW.Contracts
 
         //IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : DatabaseEntity;
 
-        IGenericRepository<Product> ProductRepository { get; }
+        //IGenericRepository<Product> ProductRepository { get; }
     }
 }

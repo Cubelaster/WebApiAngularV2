@@ -17,4 +17,9 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\RepositoryContracts\" />
+    <Folder Include="Services\ServicesContracts\" />
+  </ItemGroup>
+
 </Project>
