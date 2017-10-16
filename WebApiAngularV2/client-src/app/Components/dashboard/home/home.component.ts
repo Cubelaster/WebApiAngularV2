@@ -1,7 +1,7 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { HomeDetails } from '../../../Models/index';
-import { DashboardService } from '../../../Services/services';
+import { DashboardService, AlertService } from '../../../Services/services';
 
 @Component({
     selector: 'app-home',
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
     homeDetails: HomeDetails;
 
-    constructor(private dashboardService: DashboardService) { }
+    constructor(private dashboardService: DashboardService, private alertService: AlertService) { }
 
     ngOnInit() {
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
                 this.homeDetails = homeDetails;
             },
             error => {
-                //this.notificationService.printErrorMessage(error);
+                this.alertService.error(error, true);
             });
 
     }

@@ -29,7 +29,7 @@ namespace BL.Security
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst(JwtHelpers.Strings.JwtClaimIdentifiers.Rol),
                  identity.FindFirst(JwtHelpers.Strings.JwtClaimIdentifiers.Id)
-             };
+            };
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(

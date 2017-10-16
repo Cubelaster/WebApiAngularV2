@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Repository\RepositoryContracts\" />
+    <Folder Include="Security\Filters\" />
     <Folder Include="Services\ServicesContracts\" />
   </ItemGroup>
 

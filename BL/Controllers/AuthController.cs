@@ -66,6 +66,7 @@ namespace BL.Controllers
             {
                 // get the user to verifty
                 var userToVerify = await _userManager.FindByNameAsync(userName);
+                var roles = await _userManager.GetRolesAsync(userToVerify);
 
                 if (userToVerify != null)
                 {

@@ -19,10 +19,9 @@ using BL.Security.SecurityContracts;
 using BL.Security;
 using FluentValidation.AspNetCore;
 using BL.Controllers;
-using System.Reflection;
-using BL.ViewModels.Mappings.Account;
 using BL.Helpers.HelperContracts;
 using BL.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApiAngularV2
 {
@@ -60,6 +59,7 @@ namespace WebApiAngularV2
 
       services.AddMvc()
         .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AccountController>());
+
       services.AddAutoMapper();
       // This is supposed to be needed, but it worsk without it as well, so... Yeah. Just keep in mind.
       //typeof(AccountViewModelsToEntityMappingProfile).GetTypeInfo().Assembly 
@@ -86,12 +86,11 @@ namespace WebApiAngularV2
         }
       });
 
-      ConfigureJWT(app);
-
-      dbInitializer.Initialize(Configuration);
+      //dbInitializer.Initialize(Configuration);
 
       app.UseStaticFiles();
       app.UseDefaultFiles();
+      ConfigureJWT(app);
 
       app.UseIdentity();
       // Configures application for usage as API
@@ -131,7 +130,8 @@ namespace WebApiAngularV2
       services.AddAuthorization(options =>
       {
         options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtHelpers.Strings.JwtClaimIdentifiers.Rol, JwtHelpers.Strings.JwtClaims.ApiAccess));
-        options.AddPolicy("SuperAdminRole", policy => policy.RequireRole("SuperAdmin"));
+        options.AddPolicy("SuperAdminRole", policy => policy.RequireRole("SuperAdmin")
+          .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
       });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -147,7 +147,6 @@ namespace WebApiAngularV2
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
         options.Lockout.MaxFailedAccessAttempts = 5;
         options.Lockout.AllowedForNewUsers = true;
-        //options.Cookies.ApplicationCookie.AccessDeniedPath = "/login";
       })
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();
@@ -179,6 +178,8 @@ namespace WebApiAngularV2
       {
         AutomaticAuthenticate = true,
         AutomaticChallenge = true,
+        RequireHttpsMetadata = false,
+        SaveToken = true,
         TokenValidationParameters = tokenValidationParameters
       });
     }

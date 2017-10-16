@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BL.Controllers
 {
-    [Authorize(Roles = "Idiot")]
+    [Authorize(Roles = "SuperAdmin")]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
