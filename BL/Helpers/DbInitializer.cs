@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace BL.Helpers
 {
@@ -34,6 +35,12 @@ namespace BL.Helpers
                 new IdentityRole("Administrator"),
                 new IdentityRole("StaffMember"),
                 new IdentityRole("GuestUser")
+            };
+
+            List<Claim> claimsList = new List<Claim>()
+            {
+                new Claim("Read Permission", "Basic Claim"),
+                new Claim("Read Permission", "Advanced Claim")
             };
 
             foreach (var role in roleList)

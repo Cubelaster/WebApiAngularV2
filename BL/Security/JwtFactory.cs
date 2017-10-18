@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using DAL.Models.HelperModels;
+using DAL.Models.IdentityClasses;
+using System.Collections.Generic;
 
 namespace BL.Security
 {
@@ -20,36 +22,28 @@ namespace BL.Security
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string> GenerateEncodedToken(List<Claim> userClaims)
         {
-            var claims = new[]
-            {
-                 new Claim(JwtRegisteredClaimNames.Sub, userName),
-                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst(JwtHelpers.Strings.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(JwtHelpers.Strings.JwtClaimIdentifiers.Id)
-            };
-
             // Create the JWT security token and encode it.
-            var jwt = new JwtSecurityToken(
+            var jwt =  new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
-                claims: claims,
+                claims: userClaims,
                 notBefore: _jwtOptions.NotBefore,
                 expires: _jwtOptions.Expiration,
                 signingCredentials: _jwtOptions.SigningCredentials);
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return encodedJwt;
+            return await Task.FromResult(encodedJwt);
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        [Obsolete]
+        public ClaimsIdentity GenerateClaimsIdentity(ApplicationUser user)
         {
-            return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            return new ClaimsIdentity(new GenericIdentity(user.UserName, "Token"), new[]
             {
-                new Claim(JwtHelpers.Strings.JwtClaimIdentifiers.Id, id),
+                new Claim(JwtHelpers.Strings.JwtClaimIdentifiers.Id, user.Id),
                 new Claim(JwtHelpers.Strings.JwtClaimIdentifiers.Rol, JwtHelpers.Strings.JwtClaims.ApiAccess)
             });
         }
@@ -78,6 +72,19 @@ namespace BL.Security
             {
                 throw new ArgumentNullException(nameof(JwtIssuerOptions.JtiGenerator));
             }
+        }
+
+        public async Task<List<Claim>> GetJWTClaims(ApplicationUser user)
+        {
+            var claims = new List<Claim>()
+            {
+                 new Claim(JwtHelpers.Strings.JwtClaimIdentifiers.Id, user.Id),
+                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
+                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64)
+            };
+
+            return await Task.FromResult(claims);
         }
     }
 }

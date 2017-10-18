@@ -14,7 +14,6 @@ using AutoMapper;
 using DAL.Models.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using DAL.Models.HelperModels;
 using BL.Security.SecurityContracts;
 using BL.Security;
 using FluentValidation.AspNetCore;
@@ -75,15 +74,18 @@ namespace WebApiAngularV2
       app.Use(async (context, next) =>
       {
         await next();
-        if (context.Response.StatusCode == 404
-           //&& !Path.HasExtension(context.Request.Path.Value)
-           //&& !context.Request.Path.Value.StartsWith("/api/")
-           )
+        if (context.Response.StatusCode == 404)
         {
           _logger.LogInformation("Redirected from 404 to index");
           context.Request.Path = "/index.html";
           await next();
         }
+        //if(context.Response.StatusCode == 403)
+        //{
+        //  _logger.LogInformation("Redirected from 403 to index");
+        //  context.Request.Path = "/index.html";
+        //  await next();
+        //}
       });
 
       //dbInitializer.Initialize(Configuration);
@@ -93,13 +95,18 @@ namespace WebApiAngularV2
       ConfigureJWT(app);
 
       app.UseIdentity();
+      //app.UseCookieAuthentication(new CookieAuthenticationOptions
+      //{
+      //  AccessDeniedPath = new PathString("/login"),
+      //  AutomaticChallenge = true,
+      //  AutomaticAuthenticate = true        
+      //});
       // Configures application for usage as API
       // with default route of 'api/[Controller]'
-      app.UseMvcWithDefaultRoute();
-
+      app.UseMvc();
     }
 
-    #region ConfigureSErvicesSteps
+    #region ConfigureServicesSteps
     private void ConfigureServicesDI(IServiceCollection services)
     {
       services.AddSingleton<IConfiguration>(Configuration);
@@ -127,12 +134,15 @@ namespace WebApiAngularV2
     private void ConfigureServicesAuthorization(IServiceCollection services)
     {
       // api user claim policy
+      #region CustomPolicies
       services.AddAuthorization(options =>
       {
-        options.AddPolicy("ApiUser", policy => policy.RequireClaim(JwtHelpers.Strings.JwtClaimIdentifiers.Rol, JwtHelpers.Strings.JwtClaims.ApiAccess));
         options.AddPolicy("SuperAdminRole", policy => policy.RequireRole("SuperAdmin")
           .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
+        options.AddPolicy("AdminRole", policy => policy.RequireRole(new string[] { "Admin", "SuperAdmin" })
+            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
       });
+      #endregion CustomPolicies
 
       services.AddIdentity<ApplicationUser, IdentityRole>(options =>
       {
@@ -151,7 +161,7 @@ namespace WebApiAngularV2
         .AddEntityFrameworkStores<HeroContext>()
         .AddDefaultTokenProviders();
     }
-    #endregion ConfigureSErvicesSteps
+    #endregion ConfigureServicesSteps
 
     #region ConfigureSteps
     private void ConfigureJWT(IApplicationBuilder app)
