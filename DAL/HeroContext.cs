@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using DAL.Models.IdentityClasses;
+using DAL.Models.Security;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -71,5 +72,7 @@ namespace DAL
             }
         }
         #endregion Migrations Hack
+
+        public DbSet<Claims> Claims { get; set; }
     }
 }

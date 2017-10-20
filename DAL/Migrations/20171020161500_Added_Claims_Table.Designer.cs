@@ -9,9 +9,10 @@ using DAL.Contracts.Enumerations;
 namespace DAL.Migrations
 {
     [DbContext(typeof(HeroContext))]
-    partial class HeroContextModelSnapshot : ModelSnapshot
+    [Migration("20171020161500_Added_Claims_Table")]
+    partial class Added_Claims_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -80,13 +81,9 @@ namespace DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<string>("ClaimType");
 
-                    b.Property<int>("Status");
-
-                    b.Property<string>("Type");
-
-                    b.Property<string>("Value");
+                    b.Property<string>("ClaimValue");
 
                     b.HasKey("Id");
 
