@@ -62,3 +62,7 @@ Toastr:
    http://jasonwatmore.com/post/2017/06/25/angular-2-4-alert-toaster-notifications
    http://www.codershood.info/2017/04/14/showing-notification-using-toaster-angular-2/
    https://www.npmjs.com/package/ng2-toastr
+   
+.NET Core 2.0
+   https://stackoverflow.com/questions/45686477/jwt-on-net-core-2-0
+   
